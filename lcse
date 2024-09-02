@@ -1,0 +1,60 @@
+#include <iostream>
+#include <vector>
+#include <string>
+using namespace std;
+void printVec(vector<vector<int>> &vec){
+    for (int i =0;i<vec.size(); ++i){
+        for(int j=0;j<vec.size();++j){
+            cout<<vec[i][j]<<" ";
+        }
+    }
+    cout<< endl;
+}
+void printVec(vector<vector<char>> &vec){
+    for (int i =0;i<vec.size(); ++i){
+        for(int j=0;j<vec.size();++j){
+            cout<<vec[i][j]<<" ";
+        }
+    }
+    cout<< endl;
+}
+void LCS(string X, string Y){
+    int m = X.length();
+    int n = Y.length();
+
+    vector<vector<int>> c(m+1, vector<int>(n+1,0));
+    vector<vector<char>> b(m+1, vector<char>(n+1,'/0'));
+
+    for(int i=1; i<=m; ++i){
+            for(int j=1; j<=n; ++j){
+                if(X[i-1]==Y[j-1]){
+                    c[i][j] = c[i-1][j-1]+1;
+                    b[i][j] = '\\';
+                }
+                else if(c[i-1][j]>= c[i][j-1]){
+                    c[i][j] = c[i-1][j];
+                    b[i][j] = '^';
+                }
+                else{
+                    c[i][j] = c[i][j-1];
+                    b[i][j] = '<';
+                }
+            }
+        }
+
+        cout<<"Length of LCS " << c[m][n] <<endl;
+        cout<< "2D array integer"<<endl;
+        printVec(c);
+        cout<< "2D array for character"<<endl;
+        printVec(b);
+
+}
+
+int main(){
+    string X = "abcde";
+    string Y = "cda";
+
+    LCS(X,Y);
+
+return 0;
+}
